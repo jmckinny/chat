@@ -8,15 +8,13 @@ class Server:
         self.sock = socket.socket()
         self.HOST = socket.gethostname()
         self.PORT = os.environ.get("PORT")
-        self.connections = []
         if self.PORT == None:
             self.PORT = 1247
         self.sock.bind((self.HOST,self.PORT))
         print(f"Server \"{self.HOST}\" running on port {self.PORT}" )
     
     def new_client(self, socket, address):
-        self.connections.append(Handler(socket, address))
-
+        Handler(socket, address)
         
 
 class Handler(Thread):

@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 import socket
+import sys
+class Client:
+    def __init__(self, address = socket.gethostname(), port = 1247):
+        self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.HOST = address
+        self.PORT = port
+        self.sock.connect((self.HOST, self.PORT))
+        print(f"Starting Connection to {self.HOST} on {self.PORT}")
 
-s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-HOST = socket.gethostname()
-PORT = 1247
-
-s.connect((HOST,PORT))
-print(f"Starting Connection to {HOST} on {PORT}")
-
-def send_message(msg):
-    s.send(msg.encode())
-
-send_message("Hello Server!")
+    def send_message(self, msg):
+        self.sock.send(msg.encode())
+    
+    def close(self):
+        self.sock.close()
+    
+c = Client()
+c.send_message(sys.argv[1])
