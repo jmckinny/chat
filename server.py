@@ -25,8 +25,12 @@ class Handler(Thread):
         self.start()
 
     def run(self):
-        print('Client sent:', self.socket.recv(1024).decode())
-
+        while True:
+            data = self.socket.recv(1024).decode()
+            if not data:
+                break
+            print('Client sent:', data)
+        self.socket.close()
 
 s = Server(1247)
 s.sock.listen(5)

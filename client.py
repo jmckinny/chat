@@ -16,4 +16,6 @@ class Client:
         self.sock.close()
     
 c = Client()
-c.send_message(sys.argv[1])
+while True:
+    msg = input(">")
+    c.send_message(msg)
