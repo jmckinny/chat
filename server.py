@@ -21,7 +21,7 @@ class Server:
             self.PORT = 1247
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.HOST,self.PORT))
-        self.commands = {"nick": self.nick_command}
+        self.commands = {"nick": self.nick_command, "who": self.who_command}
 
         print(f"Server \"{self.HOST}\" running on port {self.PORT}" )
     
@@ -73,8 +73,15 @@ class Server:
         if len(new_name) > 9:
             client.socket.send("Name must be 9 chars or less".encode())
         else:
+            self.broadcast(f"{client.name} is now known as {new_name}".encode(),client)
             client.name = new_name
-        
+            
+
+    def who_command(self,client,args):
+        result = f"There are {len(self.clients)} users online:\n"
+        for c in self.clients:
+            result += f"{c.name}@{c.address[0]}\n"
+        client.socket.send(result.encode())
 
 
 
