@@ -46,7 +46,7 @@ class Server:
                 if msg:
                     message_to_send = f"<{client.address[0]}> {msg}"
                     print(message_to_send)
-                    self.broadcast(message_to_send,client)
+                    self.broadcast(message_to_send.encode(),client)
                 else:
                     print(f"Closing {client.address}")
                     client.socket.close()
