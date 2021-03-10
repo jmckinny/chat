@@ -16,6 +16,7 @@ class Client:
     
     def start_listening(self):
         threading.Thread(target=self.listen).start()
+    
     def listen(self):
         while True:
             try:
